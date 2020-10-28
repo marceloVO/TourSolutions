@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Subir Foto{% endblock %}
+
+{% block body %}
+    {{parent()}}    
+    {% if galeria %}
+     <div class="container h-100" method="PUT" >
+        <div class="row justify-content-left">
+            <div class="col-sm-8 align-self-left text-left">
+                    {% for galerias in galeria %}
+                        <div class="bg-white rounded p-3 my-3" >
+                            <div class="d-flex bd-highlight">
+                                <div class="p-2 flex-grow-1 bd-highlight ">
+                                    <h1>Title: {{galerias.title}}</h1><br>
+                                    <h5>Description: {{galerias.description}}</h5>                                
+                                    
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <div class="align-self-center">
+                                        <img class="rounded" src="{{ asset('uploads/photos/'~galerias.image)}}" width="200px" height="150px">                                        
+                                    </div>
+                                    <a onclick="window.location.href='{{ path('editGaleria',{id:galerias.id})}}'"  type="submit" class="btn btn-success">Modificar</a>
+                                    <a class="btn btn-danger delete-photo" onclick="confirmarEliminacion({{galerias.id}}) " >Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js/"></script>
+    <script src="{{ asset('js/main.js' )}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{% endblock %}

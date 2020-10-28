@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Subir Foto{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    {{ form_start(form) }}
+    <div class="container h-100">
+        <div class="row  h-100 justify-content-center align-items-center">
+            <div class="col-6  my-6 p-5">
+                <div class="card shadow">
+                    <div class="card-body">           
+                        <div>  {{ form_row( form.title) }} </div>
+                        <div>  {{ form_row(form.description) }} </div>
+                        <div>  {{ form_row(form.image) }} </div>
+                        <div>  {{form_row(form.Guardar)}} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form)}}
+{% endblock %}

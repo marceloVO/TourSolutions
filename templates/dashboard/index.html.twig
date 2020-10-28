@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}{% endblock %}
+
+{% block body %}
+    {{parent()}}
+    
+    <div class="container h-100">
+        <div class="row justify-content-left">
+            <div class="col-sm-8 align-self-left text-left">
+                    {% for galeria in pagination %}
+                        <div class="bg-white rounded p-3 my-3"  onclick="window.location.href='{{ path('verGaleria',{id:galeria.id})}}'">
+                            <div class="d-flex bd-highlight">
+                                <div class="p-2 flex-grow-1 bd-highlight ">
+                                    <h1>Title: {{galeria.title}}</h1><br>
+                                    <h5>Description: {{galeria.description}}</h5>                                
+                                    
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <div class="align-self-center">
+                                        <img class="rounded" src="{{ asset('uploads/photos/'~galeria.image)}}" width="200px" height="150px">
+                                        <br><br><br><h4>Autor: {{galeria.nombre}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>        
+        <div class="d-flex justify-content-center">
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+
+{% endblock %}
