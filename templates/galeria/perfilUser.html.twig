@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}} - Mis Foto{% endblock %}
+{% block title %}{{parent()}} - Subir Foto{% endblock %}
 
 {% block body %}
     {{parent()}}    
@@ -19,9 +19,7 @@
                                 <div class="p-2 bd-highlight">
                                     <div class="align-self-center">
                                         <img class="rounded" src="{{ asset('uploads/photos/'~galerias.image)}}" width="200px" height="150px">                                        
-                                    </div>
-                                    <a onclick="window.location.href='{{ path('editGaleria',{id:galerias.id})}}'"  type="submit" class="btn btn-success">Modificar</a>
-                                    <a class="btn btn-danger delete-photo" onclick="confirmarEliminacion({{galerias.id}}) " >Eliminar</a>
+                                    </div>                                
                                 </div>
                             </div>
                         </div>

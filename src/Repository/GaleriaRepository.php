@@ -22,7 +22,7 @@ class GaleriaRepository extends ServiceEntityRepository
     public function BuscarTodasLasFotos(){
         return $this->getEntityManager()
             ->createQuery('select galeria.id, galeria.title, galeria.description, 
-            galeria.image,usuario.nombre  from App:Galeria galeria 
+            galeria.image,usuario.nombre,usuario.id  from App:Galeria galeria 
             JOIN galeria.user usuario order by galeria.title asc');//query para buscar en la galeria y ordenarlos por 
     }
 

@@ -17,7 +17,7 @@ class GaleriaType extends AbstractType
         $builder
             ->add('title')
             ->add('description', TextareaType::class)
-            ->add('image', FileType::class)// para cambiarle el label es necesario ocupar 
+            ->add('image', FileType::class, array('data_class' => null))// para cambiarle el label es necesario ocupar 
             ->add('Guardar',SubmitType::class)
             //->add('user') comentamos el usuario para que no lo tenga que registrar
         ;

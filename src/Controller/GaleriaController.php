@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class GaleriaController extends AbstractController
 {
@@ -27,12 +27,8 @@ class GaleriaController extends AbstractController
             $brochureFile = $form['image']->getData();
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                
                 $safeFilename = iconv('UTF-8', 'ASCII//TRANSLIT', $originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
                         $this->getParameter('photos_directory'),
@@ -41,9 +37,6 @@ class GaleriaController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $galeria->setImage($newFilename);
             }
 
@@ -70,6 +63,7 @@ class GaleriaController extends AbstractController
         return $this->render('galeria/verGaleria.html.twig',['galeria'=>$galeria]);
     }
 
+    //Metodo para Eliminar la foto y redirecionar a la galeria 
     /**
      * @Route("/delete-galeria/{id}", name="deleteGaleria")
      * @Method({"DELETE"})
@@ -102,28 +96,29 @@ class GaleriaController extends AbstractController
         return $this->render('galeria/migaleria.html.twig',['galeria'=>$galeria]);
         
     }
-
+    //Metodo para editar la foto y redirecionar a la galeria 
     /**
      * @Route("/edit-galeria/{id}", name="editGaleria")
-     * Method({"GET","PUT"})
+     * Method({"GET","PUT","POST"})
     */
     public function editGaleria(Request $request,$id)
     {
+        $galeria = $this->getDoctrine()->getRepository(Galeria::class)->find($id);
+
+        if(!$galeria){
+            throw $this->createNotFoundException('No se permiten datos null el id que ocupo es:'.$id);
+        }
         
-        $em = $this->getDoctrine()->getManager();
-        $galeria = $em->getRepository(Galeria::class)->find($id);
+        
         $form = $this->createForm(GaleriaType::class,$galeria);
-        $form->handleRequest($request);
+        
+        $form->handleRequest($request);        
         if($form->isSubmitted() && $form->isValid()){
             $brochureFile = $form['image']->getData();
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                
                 $safeFilename = iconv('UTF-8', 'ASCII//TRANSLIT', $originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
                         $this->getParameter('photos_directory'),
@@ -132,20 +127,31 @@ class GaleriaController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $galeria->setImage($newFilename);
             }
 
-            $user = $this->getUser();
-            $galeria->setUser($user);
-            $em = $this->getDoctrine()->getManager()->flush();            
-            
-            return $this->redirectToRoute('editGaleria');
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('MiGaleria');
         }
-        return $this->render('galeria/migaleria.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('galeria/editGaleria.html.twig',['form'=> $form->createView()]);
+        
     }
+
+
+    /**
+     * @Route("/perfil/{id}/{nombre}", name="perfilUser")
+    */
+
+    public function perfilUser($id){
+
+        $em = $this->getDoctrine()->getManager();
+        
+        
+        $galeria = $em->getRepository(Galeria::class)->findBy(['user'=>$id]);
+
+        return $this->render('galeria/perfilUser.html.twig',['galeria'=>$galeria]);
+        
+    }
+
 }
