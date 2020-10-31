@@ -3,36 +3,29 @@
 {% block title %}{{parent()}} - Mis Foto{% endblock %}
 
 {% block body %}
-    {{parent()}}    
+{{parent()}}
+{% if app.user.baneado == 0 %}       
     {% if galeria %}
-     <div class="container h-100" method="PUT" >
-        <div class="row justify-content-left">
-            <div class="col-sm-8 align-self-left text-left">
-                    {% for galerias in galeria %}
-                        <div class="bg-white rounded p-3 my-3" >
+        <div class="container h-100" method="PUT" >
+            <a class="btn btn-primary"  href='{{ path('perfilUser',{id:app.user.id,nombre:app.user.nombre})}}'>Perfil para amigos</a>
+            <div class="row justify-content-left">                
+                {% for galeria in galeria %}
+                    <div class="col-lg-6 ">
+                        <div class="bg-white rounded p-3 my-3 " >                        
                             <div class="d-flex bd-highlight">
-                                <div class="p-2 flex-grow-1 bd-highlight ">
-                                    <h1>Title: {{galerias.title}}</h1><br>
-                                    <h5>Description: {{galerias.description}}</h5>                                
-                                    
-                                </div>
-                                <div class="p-2 bd-highlight">
-                                    <div class="align-self-center">
-                                        <img class="rounded" src="{{ asset('uploads/photos/'~galerias.image)}}" width="200px" height="150px">                                        
-                                    </div>
-                                    <a onclick="window.location.href='{{ path('editGaleria',{id:galerias.id})}}'"  type="submit" class="btn btn-success">Modificar</a>
-                                    <a class="btn btn-danger delete-photo" onclick="confirmarEliminacion({{galerias.id}}) " >Eliminar</a>
+                                <div class=" flex-grow-1 bd-highlight" style="text-align:center">                                
+                                    <h1  >{{galeria.title}}</h1><br> 
+                                    <a href="{{ asset('uploads/photos/'~galeria.image)}}" data-lightbox="image-1" data-title="{{galeria.title}}"><img   src="{{ asset('uploads/photos/'~galeria.image)}}" width="200px" height="150px"></a>
+                                    <h5> {{galeria.description}}</h5>
+                                    <a onclick="window.location.href='{{ path('editGaleria',{id:galeria.id})}}'"  type="submit" class="btn btn-success">Modificar</a>
+                                    <a class="btn btn-danger delete-photo" onclick="confirmarEliminacion({{galeria.id}}) " >Eliminar</a>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     {% endif %}
-{% endblock %}
-{% block javascripts %}
-    <script src="/js/main.js/"></script>
-    <script src="{{ asset('js/main.js' )}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{% endif %}
 {% endblock %}

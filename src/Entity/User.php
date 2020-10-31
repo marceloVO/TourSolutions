@@ -37,6 +37,11 @@ class User implements UserInterface
     private $status;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $baneado;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -83,7 +88,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getStatus(): ?Boolean
+    public function getStatus(): ?bool 
     {
         return $this->status;
     }
@@ -94,13 +99,25 @@ class User implements UserInterface
 
         return $this;
     }
+    public function getBaneado(): ?bool 
+    {
+        return $this->baneado;
+    }
 
+    public function setBaneado(string $baneado): self
+    {
+        $this->baneado = $baneado;
+
+        return $this;
+    }
+    
     //Constructor para asignar datos en bruto en las variables status y roles
     //para que al momento de registrar se les asignen automaticos    
     public function __construct()
     {
         $this->status = true;//se le asigna el status a verdadero = 1
-        $this->roles = ['ROLE_USER'];//le asignamos el rol de usuario normal
+        //$this->roles = ['ROLE_USER'];//le asignamos el rol de usuario normal
+        $this->baneado = false;//le asignamos el baneo con valor 0
     }
     /**
      * A visual identifier that represents this user.
@@ -119,7 +136,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+       
 
         return array_unique($roles);
     }

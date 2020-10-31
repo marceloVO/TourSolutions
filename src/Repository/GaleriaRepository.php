@@ -23,7 +23,7 @@ class GaleriaRepository extends ServiceEntityRepository
         return $this->getEntityManager()
             ->createQuery('select galeria.id, galeria.title, galeria.description, 
             galeria.image,usuario.nombre,usuario.id  from App:Galeria galeria 
-            JOIN galeria.user usuario order by galeria.title asc');//query para buscar en la galeria y ordenarlos por 
+            JOIN galeria.user usuario where usuario.status = true and usuario.baneado = false order by galeria.title asc');//query para buscar en la galeria y ordenarlos por 
     }
 
     // /**

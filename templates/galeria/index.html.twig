@@ -9,11 +9,10 @@
         <div class="row  h-100 justify-content-center align-items-center">
             <div class="col-6  my-6 p-5">
                 <div class="card shadow">
-                    <div class="card-body">           
-                        <div>  {{ form_row( form.title) }} </div>
-                        <div>  {{ form_row(form.description) }} </div>
-                        <div>  {{ form_row(form.image) }} </div>
-                        <div>  {{form_row(form.Guardar)}} </div>
+                    <div class="card-body">      
+                    <form method="post" enctype="multipart/form-data">     
+                        <div>  {{ form_widget( form) }} </div>                        
+                    </form>
                     </div>
                 </div>
             </div>

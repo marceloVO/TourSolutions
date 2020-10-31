@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+<form action="" enctype="multipart/form-data">
+<div class="container h-100 .col-"  >
+    
+    <div class="row justify-content-left bg-white">
+    
+        <table class="table">
+            <tr>
+                <th>Nombre</th>    
+                <th>Correo</th>   
+                <th>Status</th>
+                <th>Baneado</th> 
+                <th>Opciones</th>                
+            </tr>            
+            {% for user in usuario %}                
+                <tr>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.status }}</td>
+                    <td>{{ user.baneado }}</td>
+                    <td>
+                        {% if user.status == false %}
+                        <a href="{{path('statusUsuario' ,{id:user.id})}}"  class="btn btn-primary btn-xl">Habilitar</a>
+                        {% else %}
+                        <a href="{{path('statusUser' ,{id:user.id})}}"  class="btn btn-success btn-xl">deshabilitar</a>
+                        {% endif %}
+                        {% if user.baneado == false %}
+                        <a onclick="confirmarBan({{user.id}})" class="btn btn-danger btn-xl">Banear</a>
+                        {% else %}
+                        <a href="{{path('Desbanear',{id:user.id})}}"  class="btn btn-success btn-xl">Quitar Ban</a>
+                        {% endif %}
+                    </td>
+                    <br>                
+                </tr>        
+            {% endfor %}            
+        </table>        
+    </div>
+    <div class="row justify-content-left bg-white">
+    <label>Status: 1->Habilitado para subir fotos | Status: 0 en blanco->Sus fotos no estan habilitadas para los de mas usuarios</label><br>
+    <br>
+    <label>Baneado en estado: 1->deshabilitado para ocupar el sistema y no se muestran las fotos del usuario | Baneado en estado: 0 en blanco->Habilitado para ocupar el sistema</label><br>
+    </div>
+    <div class="row justify-content-center  ">
+        <a href="{{path('registroAdmin')}}" class="btn btn-primary" >Registrar Admin</a>
+    </div>   
+</div>  
+</form>
+    
+{% endblock %}

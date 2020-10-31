@@ -26,7 +26,7 @@
 body {
     background-image: url("../img/fondo.jpg");
     background-repeat: no-repeat;
-    background-size: 120%;
+    background-size: cover; 
     background-attachment: fixed;
     font-family: signikaregular;
 

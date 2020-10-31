@@ -51,17 +51,7 @@ class GaleriaController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    //con la ruta podemos ver el enrutamiento que en este caso se dirige a galeria/{id}
-    /**
-     * @Route("/galeria/{id}", name="verGaleria")
-    */
     
-    public function verGaleria($id){
-        $em = $this->getDoctrine()->getManager();
-        $galeria = $em->getRepository(Galeria::class)->find($id);
-
-        return $this->render('galeria/verGaleria.html.twig',['galeria'=>$galeria]);
-    }
 
     //Metodo para Eliminar la foto y redirecionar a la galeria 
     /**
@@ -143,14 +133,14 @@ class GaleriaController extends AbstractController
      * @Route("/perfil/{id}/{nombre}", name="perfilUser")
     */
 
-    public function perfilUser($id){
+    public function perfilUser($id, $nombre){
 
         $em = $this->getDoctrine()->getManager();
         
         
         $galeria = $em->getRepository(Galeria::class)->findBy(['user'=>$id]);
 
-        return $this->render('galeria/perfilUser.html.twig',['galeria'=>$galeria]);
+        return $this->render('galeria/perfilUser.html.twig',['galeria'=>$galeria,'nombre'=>$nombre]);
         
     }
 
