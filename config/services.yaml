@@ -6,6 +6,8 @@
 parameters:
     photos_directory: '%kernel.project_dir%/public/uploads/photos' #creamos el directorio de las fotos
     
+
+
 services:
     # default configuration for services in *this* file
     _defaults:

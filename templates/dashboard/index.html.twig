@@ -13,7 +13,7 @@
                         <div class="d-flex bd-highlight">
                             <div class=" flex-grow-1 bd-highlight" style="text-align:center">                                
                                 <h1  >{{galeria.title}}</h1><br> 
-                                <a href="{{ asset('uploads/photos/'~galeria.image)}}" data-lightbox="image-1" data-title="{{galeria.title}}"><img   src="{{ asset('uploads/photos/'~galeria.image)}}" width="200px" height="150px"></a>
+                                <a href="{{ asset('uploads/photos/'~galeria.image)}} " data-lightbox="image-1" data-title="{{galeria.title}}"><img   src="{{ asset('uploads/photos/'~galeria.image)}}" width="200px" height="150px"></a>
                                 <h5> {{galeria.description}}</h5>
                                 <h4>Autor: {{galeria.nombre}}</h4><br>                                        
                                 <a class="btn btn-success" onclick="window.location.href='{{ path('perfilUser',{id:galeria.id,nombre:galeria.nombre})}}'" >Perfil del Autor</a>
